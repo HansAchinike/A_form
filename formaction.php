@@ -1,30 +1,35 @@
 <?php
-session_start();
+    if(isset($_POST['submit'])) {
+        $First_name = $_POST['first_name'];
+        $Last_name = $_POST['last_name'];
+        $Email = $_POST['email'];
+        $Password = $_POST['pwd'];
+        $Dob = $_POST['dob'];
+        $array_data = [
+            'First_name' => $First_name,
+            'Last_name'=> $Last_name, 
+            'Email' => $Email,
+            'Password' => $Password,
+            'Dob' => $Dob
+        ];
 
+        $inp = file_get_contents('database.json');
+        
+        $tempArray = json_decode($inp, TRUE);
 
-if(isset($_POST['submit'])) {
-   
-    $First_name = $_POST['first_name'];
-    $Last_name = $_POST['last_name'];
-    $Email = $_POST['email'];
-    $Password = $_POST['pwd'];
-    $Dob = $_POST['dob'];
+        foreach ($tempArray as $data) {
+            if ($data['Email'] == $Email){
+                echo "<script>alert ('Email already exist')</script>";
+                echo "<script>window.open('form.php','_self')</script>";
+                return;
+            }
+        }
+        array_push($tempArray, $array_data);
+        $jsonData = json_encode($tempArray);
 
-   $array_data = [
-                  'First_name' => $First_name,
-                  'Last_name'=> $Last_name, 
-                  'Email' => $Email,
-                  'Password' => $Password,
-                  'Dob' => $Dob
-];
-                   $_SESSION['mail'] = $Email;
-                   $_SESSION['pass'] = $Password;
-                   $_SESSION['array_data'] = $array_data;
-}
-     echo $First_name . $Last_name . $Email . $Password . $Dob;
-
-     file_put_contents('files/'.$array_data['First_name'] . ".json" , json_encode($array_data));
-
-     
-
-     ?>
+        file_put_contents('database.json', $jsonData);
+        echo "<script>alert ('Registration success!! Now login')</script>";
+        echo "<script>window.open('login.php','_self')</script>";
+    }
+    
+?>
