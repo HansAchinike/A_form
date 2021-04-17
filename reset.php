@@ -6,30 +6,33 @@
 <body style="background-color: #f1d6a9">
     <h1>Reset Password</h1>
     <form method="POST">
-        <input type="text" name="email" placeholder="Email" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
         <input type="password" name="pwd" placeholder="New Password" required><br>
         <button type="submit" name="submit"> Reset </button><br>
         <?php
             if (isset($_POST['submit'])) {
                 $email = $_POST['email'];
-                $pwd = $_POST['pwd'];
+                $password = $_POST['pwd'];
 
-                $inp = file_get_contents('database.json');
+                $db = file_get_contents('database.json');
         
-                $tempArray = json_decode($inp, TRUE);
+                $tempDb = json_decode($db, TRUE);
                 
-                foreach ($tempArray as $key => $data) {
-                    if ($data['Email'] == $email){
-                        $tempArray[$key]['Password'] = $pwd;
-                        echo "<script>alert ('Reset password success!!')</script>";
-                        echo "<script>window.open('login.php','_self')</script>";
-                    }else{
-                        echo "<script>alert ('Wrong details')</script>";
+                $resetCheck = FALSE;
+                foreach ($tempDb as $key => $data) {
+                    if ($data['email'] == $email){
+                        $tempDb[$key]['password'] = $password;
+                        $resetCheck = TRUE;
                     }
                 }
-                $jsonData = json_encode($tempArray);
+                if ($resetCheck){
+                    echo "<script>alert ('Reset password success!!')</script>";
+                    echo "<script>window.open('login.php','_self')</script>";
+                }else{
+                    echo "<script>alert ('Wrong details')</script>";
+                }
+                $jsonData = json_encode($tempDb);
                 file_put_contents('database.json', $jsonData);
-
             }
         ?>
     </form>
