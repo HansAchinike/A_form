@@ -1,16 +1,1 @@
-[
-    {
-        "First_name": "Eburu",
-        "Last_name": "Evans",
-        "Email": "evanseburu32@gmail.com",
-        "Password": "passwordssss",
-        "Dob": "2021-04-02"
-    },
-    {
-        "First_name": "Eburu",
-        "Last_name": "Evans",
-        "Email": "evans@gmail.com",
-        "Password": "password",
-        "Dob": "2021-04-03"
-    }
-]
+[{"id":"afb72ff0b8ca4385062a2022514510af","firstName":"Eburu","lastName":"Evans","email":"evanseburu@yahoo.com","password":"evans12345","dob":"2021-04-02"}]
